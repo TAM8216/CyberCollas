@@ -22,6 +22,6 @@ Sebastian Castillo Roque
 Jason Velasco Guardia
 Tamengo Sanchez Bustamante Calderon
 
-Instrucciones: XD
+Instrucciones: 
 
 Estado del proyecto: Idea base
