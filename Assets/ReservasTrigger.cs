@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class ReservasTrigger : MonoBehaviour
 {
-    public string urlReservas = "http://iskaypav.test/reserva/crear"; // reemplaza por tu URL real
     private bool jugadorDentro = false;
+    private bool mostrarMensaje = false;
+
+    private float tiempoMensaje = 6f;
+    private float contador = 0f;
 
     void OnTriggerEnter(Collider other)
     {
@@ -25,23 +28,49 @@ public class ReservasTrigger : MonoBehaviour
     {
         if (jugadorDentro && Input.GetKeyDown(KeyCode.E))
         {
-            Application.OpenURL(urlReservas);
+            mostrarMensaje = true;
+            contador = tiempoMensaje;
+        }
+
+        if (mostrarMensaje)
+        {
+            contador -= Time.deltaTime;
+
+            if (contador <= 0)
+            {
+                mostrarMensaje = false;
+            }
         }
     }
 
     void OnGUI()
-{
-    if (jugadorDentro)
     {
         GUIStyle estilo = new GUIStyle(GUI.skin.label);
-        estilo.fontSize = 20; // Cambia este número para ajustar el tamaño
-        estilo.normal.textColor = Color.white; // Puedes cambiar el color también
+        estilo.fontSize = 20;
+        estilo.normal.textColor = Color.white;
+        estilo.alignment = TextAnchor.MiddleCenter;
 
-        GUI.Label(
-            new Rect(Screen.width / 2 - 150, Screen.height - 100, 300, 30),
-            "Presiona E para ir a reservas",
-            estilo
-        );
+        if (jugadorDentro && !mostrarMensaje)
+        {
+            GUI.Label(
+                new Rect(Screen.width / 2 - 150, Screen.height - 100, 300, 30),
+                "Presiona E para interactuar",
+                estilo
+            );
+        }
+
+        if (mostrarMensaje)
+        {
+            GUI.Box(
+                new Rect(Screen.width / 2 - 250, Screen.height / 2 - 80, 500, 160),
+                ""
+            );
+
+            GUI.Label(
+                new Rect(Screen.width / 2 - 230, Screen.height / 2 - 60, 460, 120),
+                "Bienvenido a CyberCollas.\n\nUn juego de sátira inspirado en un futuro distópico de La Paz y El Alto.",
+                estilo
+            );
+        }
     }
-}
 }
