@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerScript : MonoBehaviour
 {
@@ -7,9 +8,7 @@ public class playerScript : MonoBehaviour
 
     public float speedCam;
     public float playerSpeed;
-    public GameObject pausePanel;
-    private bool isPaused = false;
-    
+
     float camRotation = 0;
 
     private void Start()
@@ -22,10 +21,11 @@ public class playerScript : MonoBehaviour
 
     private void Update()
     {
-         if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            TogglePause();
+            SceneManager.LoadScene("main_manu");
         }
+
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
@@ -41,21 +41,5 @@ public class playerScript : MonoBehaviour
         Vector3 movement = (transform.right * moveX + transform.forward * moveZ) * playerSpeed * Time.deltaTime;
 
         control.Move(movement);
-
-    }
-    void TogglePause()
-    {
-        isPaused = !isPaused;
-
-        if (isPaused)
-        {
-            Time.timeScale = 0f; // Pausar juego
-            pausePanel.SetActive(true); // Mostrar mensaje
-        }
-        else
-        {
-            Time.timeScale = 1f; // Reanudar juego
-            pausePanel.SetActive(false); // Ocultar mensaje
-        }
     }
 }
